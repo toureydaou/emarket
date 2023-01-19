@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -48,28 +49,32 @@ const Products = () => {
         )
     }
 
+    const filterProduct = (cat) => {
+        const updatedList = data.filter((x) => x.category === cat);
+        setFilter(updatedList);
+    }
+
     const ShowProducts = () => {
         return (
             <>
                 <div className="buttons d-flex justify-content-center mt-5 pb-5">
-                    <button className="btn btn-outline-dark me-2">All</button>
-                    <button className="btn btn-outline-dark me-2">Men's Clothing</button>
-                    <button className="btn btn-outline-dark me-2">Women's Clothing</button>
-                    <button className="btn btn-outline-dark me-2">Jewelery</button>
-                    <button className="btn btn-outline-dark me-2">Electronics</button>
-                    <button className="btn btn-outline-dark me-2">Men's Clothing</button>
+                    <button className="btn btn-outline-dark me-2" onClick={() => setFilter(data)}>All</button>
+                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
+                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("women's clothing")}>Women's Clothing</button>
+                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
+                    <button className="btn btn-outline-dark me-2" onClick={() => filterProduct("electronics")}>Electronics</button>
                 </div>   
                 {filter.map((product)=>{
                     return(
                         <>
                             <div className="col-md-6 col-lg-4 col-xl-3 mb-4">
-                                <div class="card h-100 text-center
-                                 p-4">
-                                    <img class="card-img-top" src={product.image} alt={product.title} style={{height:"250px" }}/>
-                                    <div class="card-body">
-                                        <h4 class="card-title mb-0">{product.title.substring(0, 12)}...</h4>
-                                        <p class="card-text">{product.price} $</p>
-                                        <a href="#" class="btn btn-outline-dark">Details</a>
+                                <div className="card h-100 text-center
+                                 p-4" key={product.id}>
+                                    <img className="card-img-top" src={product.image} alt={product.title} style={{height:"250px" }}/>
+                                    <div className="card-body">
+                                        <h4 className="card-title mb-0">{product.title.substring(0, 12)}...</h4>
+                                        <p className="card-text fw-bold">{product.price} $</p>
+                                        <NavLink to={`/products/${product.id}`} className="btn btn-outline-dark">Details</NavLink>
                                     </div>
                                 </div>
                             </div>
